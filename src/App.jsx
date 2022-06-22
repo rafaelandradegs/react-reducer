@@ -1,46 +1,60 @@
 import React, { useReducer } from 'react'
 
 export function App() {
-  //Reducer
-  const [state, dispatch] = useReducer(reducer, {
-    valor: 1000,
-    mostrar: true
+  const [state, dispacth] = useReducer(reducer, {
+    player1: 0,
+    player2: 0
   })
 
-  //funcao reducer
   function reducer(state, action) {
     switch (action.type) {
-      case 'INCREMENTAR':
-        return { valor: state.valor + 1, mostrar: state.mostrar }
+      case 'SCORE1':
+        return {
+          player1: state.player1 + 1,
+          player2: state.player2
+        }
+      case 'SCORE2':
+        return {
+          player1: state.player1,
+          player2: state.player2 + 1
+        }
 
-      case 'VISIBILIDADE':
-        return { valor: state.valor, mostrar: !state.mostrar }
+      case 'RESETAR':
+        return {
+          player1: 0,
+          player2: 0
+        }
 
       default:
         return state
     }
   }
-
   return (
     <>
       <h1>React Hooks - useReducer</h1>
       <hr />
-      <p>Valor: {state.valor}</p>
-      {state.mostrar && <p>Objeto booleano</p>}
-      <hr />
+      <p>Player 1: {state.player1}</p>
+      <p>Player 2: {state.player2}</p>
       <button
         onClick={() => {
-          dispatch({ type: 'INCREMENTAR' })
+          dispacth({ type: 'SCORE1' })
         }}
       >
-        Contador
+        Pontos 1
       </button>
       <button
         onClick={() => {
-          dispatch({ type: 'VISIBILIDADE' })
+          dispacth({ type: 'SCORE2' })
         }}
       >
-        Visivel / Ocultar
+        Pontos 2
+      </button>
+      <button
+        onClick={() => {
+          dispacth({ type: 'RESETAR' })
+        }}
+      >
+        Resetar score
       </button>
     </>
   )
